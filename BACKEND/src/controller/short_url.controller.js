@@ -16,7 +16,7 @@ export const createShortUrl = wrapAsync(async (req, res) => {
   } else {
     shortUrl = await createShortUrlWithoutUser(data.url);
   }
-  res.status(200).json({ shortUrl: process.env.APP_URL + shortUrl });
+  res.status(200).json({ shortUrl: process.env.DEPLOYMENT_URL + shortUrl });
 });
 
 
@@ -30,8 +30,6 @@ export const redirectFromShortUrl = wrapAsync(async (req, res) => {
   const now = Date.now(); // current time in milliseconds
   const expiry = url.expiresAt ? new Date(url.expiresAt).getTime() : null;
 
-  console.log("🕒 Now:", now, "→", new Date(now).toISOString());
-  console.log("⏳ Expires At:", expiry, "→", url.expiresAt);
 
   if (expiry && now >= expiry) {
     return res.status(410).send(expiredLinkTemplate());

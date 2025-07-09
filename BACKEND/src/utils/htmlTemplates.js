@@ -45,7 +45,7 @@ export const expiredLinkTemplate = () => {
       <div class="container">
         <h1>⚠️ Link Expired</h1>
         <p>This link is no longer valid. It may have expired or already been used.</p>
-        <a href="https://shrinkly-beta.vercel.app">Return to Shrinkly</a>
+        <a href="https://shrinkly-beta.vercel.app/dashboard">Return to Shrinkly</a>
       </div>
     </body>
     </html>
