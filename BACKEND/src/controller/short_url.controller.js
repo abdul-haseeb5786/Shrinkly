@@ -5,6 +5,7 @@ import {
 } from "../services/short_url.service.js";
 import wrapAsync from "../utils/tryCatchWrapper.js";
 import urlSchema from '../models/short_url.model.js';
+import { expiredLinkTemplate } from "../utils/htmlTemplates.js";
 
 
 export const createShortUrl = wrapAsync(async (req, res) => {
