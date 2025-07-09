@@ -28,7 +28,7 @@ app.use("/api/user", user_routes );
 app.get("/:id", redirectFromShortUrl);
 app.use(errorHandler);
 app.get('/', (req, res) => {
-  res.redirect('http://localhost:5173');
+  res.redirect(process.env.FRONTEND_URL);
 });
 
 
