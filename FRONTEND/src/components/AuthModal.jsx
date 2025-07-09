@@ -2,12 +2,14 @@
 import React from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { setShowAuthModal } from '../store/slice/authSlice'
+import { useLocation } from '@tanstack/react-router'
 
 const AuthModal = () => {
   const showAuthModal = useSelector((state) => state.auth.showAuthModal)
   const dispatch = useDispatch()
+    const location = useLocation();
 
-  if (!showAuthModal) return null // 👈 hide if false
+  if (!showAuthModal || location.pathname === "/auth") return null;
 
   return (
     <div className="fixed inset-0 z-50 bg-black bg-opacity-40 flex justify-center items-center">
