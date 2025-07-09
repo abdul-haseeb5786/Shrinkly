@@ -5,6 +5,7 @@ const initialState = {
   isAuthenticated: false,
   loading: false,
   error: null,
+  showAuthModal: false,
 };
 
 const authSlice = createSlice({
@@ -18,9 +19,12 @@ const authSlice = createSlice({
     logout: (state) => {
         state.user = null;
       state.isAuthenticated = false;
-    }
+    },
+     setShowAuthModal: (state, action) => {
+      state.showAuthModal = action.payload;
+    },
   },
 });
 
-export const { login, logout } = authSlice.actions;
+export const { login, logout, setShowAuthModal } = authSlice.actions;
 export default authSlice.reducer;
