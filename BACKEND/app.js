@@ -15,7 +15,7 @@ import cookiaParser from "cookie-parser";
 const app = express();
 
 app.use(cors({
-  origin: process.env.FRONTEND_URL,
+  origin: "https://shrinkly-beta.vercel.app",
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
   credentials: true // if you're using cookies or auth headers
 
@@ -45,6 +45,7 @@ const startServer = async () => {
     app.listen(3000, () => {
       console.log("✅ MongoDB connected");
       console.log("🚀 Server is running on http://localhost:3000");
+
     });
   } catch (error) {
     console.error("❌ Failed to start server:", error);
