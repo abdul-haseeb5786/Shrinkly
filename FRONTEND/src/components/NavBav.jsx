@@ -1,81 +1,98 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link, useNavigate } from '@tanstack/react-router';
 import { useDispatch, useSelector } from 'react-redux';
-import { logout } from '../store/slice/authSlice';
+import { logout, setShowAuthModal } from '../store/slice/authSlice';
 import { logoutUser } from '../api/user.api';
 import ConfirmModal from './ConfirmModal';
-import { useState } from 'react';
 
 const Navbar = () => {
   const { isAuthenticated, user } = useSelector((state) => state.auth);
-  const navigate = useNavigate();
-
-  const dispatch = useDispatch(); // yeh already present hai
-
   const { name } = user?.user || {};
-
   const [showModal, setShowModal] = useState(false);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const onLogout = async () => {
     try {
       await logoutUser();
       dispatch(logout());
-      navigate({ to: "/auth" });
+      navigate({ to: '/auth' });
     } catch (error) {
-      console.error("Logout failed:", error);
+      console.error('Logout failed:', error);
     }
   };
-console.log("isAuthenticated", isAuthenticated);
 
-  <ConfirmModal
-    isOpen={showModal}
-    onClose={() => setShowModal(false)}
-    onConfirm={onLogout}
-    title="Are you sure you want to logout?"
-    confirmText="Yes"
-    cancelText="No"
-  />
-
+  const handleProtectedClick = (to) => {
+    if (isAuthenticated) {
+      navigate({ to });
+    } else {
+      dispatch(setShowAuthModal(true));
+    }
+  };
 
   return (
-    <nav className="bg-white border border-b-black">
+    <nav className="bg-gray-900 text-white shadow-md border-b border-gray-800">
       <ConfirmModal
-    isOpen={showModal}
-    onClose={() => setShowModal(false)}
-    onConfirm={onLogout}
-    title="Are you sure you want to logout?"
-    confirmText="Yes"
-    cancelText="No"
-  />
-      <div className="mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between h-16">
-          {/* Left side - App Name */}
-          <div className="flex items-center">
-            <Link to="/" className="text-xl font-bold text-gray-800">
-              URL Shortener
+        isOpen={showModal}
+        onClose={() => setShowModal(false)}
+        onConfirm={onLogout}
+        title="Are you sure you want to logout?"
+        confirmText="Yes"
+        cancelText="No"
+      />
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex justify-between h-16 items-center">
+          {/* Logo / Brand */}
+          <div>
+            <Link to="/" className="text-xl font-bold text-white hover:text-blue-400">
+              Shrinkly
             </Link>
           </div>
 
-          {/* Right side - Auth buttons */}
-          <div className="flex items-center">
+          {/* Navigation Links */}
+          <div className="flex space-x-6 items-center">
+            <button
+              onClick={() => handleProtectedClick('/custom-url')}
+              className="hover:text-blue-400 text-sm font-medium"
+            >
+              Custom URL
+            </button>
+
+            <button
+              onClick={() => handleProtectedClick('/url-with-expiry')}
+              className="hover:text-blue-400 text-sm font-medium"
+            >
+              URL With Expiry
+            </button>
+
+            <button
+              onClick={() => handleProtectedClick('/dashboard')}
+              className="hover:text-blue-400 text-sm font-medium"
+            >
+              Dashboard
+            </button>
+          </div>
+
+          {/* Auth Buttons */}
+          <div className="flex items-center space-x-4">
             {isAuthenticated ? (
-              <div className="flex items-center space-x-4">
-                <span className="text-gray-700">Welcome, {user ? name : "User"}</span>
+              <>
+                <span className="text-sm text-gray-300">Welcome, {name || 'User'}</span>
                 <button
                   onClick={() => setShowModal(true)}
-                  className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-md text-sm font-medium"
+                  className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-md text-sm font-medium transition"
                 >
                   Logout
                 </button>
-
-              </div>
+              </>
             ) : (
-              <Link
-                to="/auth"
-                className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-md text-sm font-medium"
+              <button
+                onClick={() => dispatch(setShowAuthModal(true))}
+                className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md text-sm font-medium transition"
               >
                 Login
-              </Link>
+              </button>
             )}
           </div>
         </div>
