@@ -33,12 +33,9 @@ export const redirectFromShortUrl = wrapAsync(async (req, res) => {
   console.log("⏳ Expires At:", expiry, "→", url.expiresAt);
 
   if (expiry && now >= expiry) {
-    console.log("❌ Link expired");
-    return res.status(410).send("This link has expired");
+    return res.status(410).send(expiredLinkTemplate());
   }else{
     await urlSchema.updateOne({ short_url: id }, { $inc: { clicks: 1 } });
-  
-    console.log("✅ Link is valid. Redirecting...");
     res.redirect(url.full_url);
 
   }
