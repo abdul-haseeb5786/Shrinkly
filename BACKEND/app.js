@@ -27,9 +27,9 @@ app.use("/api/create", short_url);
 app.use("/api/user", user_routes );
 app.get("/:id", redirectFromShortUrl);
 app.use(errorHandler);
-app.get('/', (req, res) => {
-  res.redirect(process.env.FRONTEND_URL);
-});
+// app.get('/', (req, res) => {
+//   res.redirect(process.env.FRONTEND_URL);
+// });
 
 
 app.get("/", (req, res) => {
