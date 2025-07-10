@@ -9,7 +9,9 @@ const AuthModal = () => {
   const dispatch = useDispatch()
     const location = useLocation();
 
-  if (!showAuthModal) return null;
+    
+
+  if (!showAuthModal || location.pathname === "/auth") return null;
 
 
   return (

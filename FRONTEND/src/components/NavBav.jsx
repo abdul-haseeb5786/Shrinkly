@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link, useNavigate } from '@tanstack/react-router';
+import { Link, redirect, useNavigate } from '@tanstack/react-router';
 import { useDispatch, useSelector } from 'react-redux';
 import { logout, setShowAuthModal } from '../store/slice/authSlice';
 import { logoutUser } from '../api/user.api';
@@ -88,7 +88,7 @@ const Navbar = () => {
               </>
             ) : (
               <button
-                onClick={() => dispatch(setShowAuthModal(true))}
+                onClick={() => navigate({ to: '/auth' })}
                 className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md text-sm font-medium transition"
               >
                 Login
