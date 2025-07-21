@@ -80,12 +80,12 @@ const UserUrl = () => {
             <td className="px-6 py-4">
               <div className="text-sm">
                 <a 
-                  href={`http://localhost:3000/${url.short_url}`} 
+                  href={`https://shrinkly-backend.vercel.app/${url.short_url}`} 
                   target="_blank" 
                   rel="noopener noreferrer"
                   className="text-[#778da9] hover:text-[#e0e1dd] hover:underline transition"
                 >
-                  {`localhost:3000/${url.short_url}`}
+                  {`https://shrinkly-backend.vercel.app/${url.short_url}`}
                 </a>
               </div>
             </td>
